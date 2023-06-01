@@ -1,5 +1,5 @@
 import random
-from card import Card
+from modules.card import Card
 
 
 class Deck:
@@ -14,16 +14,13 @@ class Deck:
                 self.cards.append(Card(suit, str(rank)))
 
     def shuffle(self):
-        # for card in self.cards:
-        #     print("card ", card.get_suit(), card.get_rank(), "\n")
-        # print("__________")
         if len(self.cards) > 1:
             random.shuffle(self.cards)
-        # for card in self.cards:
-        #     print("card ", card.get_suit(),card.get_rank(), "\n")
-        # print(self.cards.__len__())
 
     def deal_card(self):
         if len(self.cards) > 0:
             deal_cart = self.cards.pop(-1)
             return deal_cart
+
+    def get_cards(self):
+        return self.cards

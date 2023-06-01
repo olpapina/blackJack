@@ -1,4 +1,4 @@
-from chip import Chip
+from modules.chip import Chip
 
 
 class Hand:
@@ -39,3 +39,6 @@ class Hand:
 
     def get_chip(self):
         return self.chip
+
+    def set_clean_cards(self):
+        self.cards = []

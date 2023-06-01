@@ -1,4 +1,4 @@
-from deck import Deck
+from modules.deck import Deck
 
 
 class Game:
@@ -8,7 +8,12 @@ class Game:
         self.cards = Deck()
 
     def start_game(self, players_dict, players_bet, deck):
-        print("New game start!")
+        self.dealer.cards = []
+        for key in players_dict:
+            player_hand = players_dict[key]
+            player_hand.cards = []
+        print("")
+        print("New round start!")
         for i in range(2):
             self.dealer.add_cards(deck.deal_card())
             for key in players_dict:
@@ -17,7 +22,7 @@ class Game:
                 if i == 0:
                     chip = player_hand.get_chip()
                     print("{},".format(key))
-                    players_bet[key] = chip.get_bet(50)
+                    players_bet[key] = chip.get_bet(100)
         card = self.dealer.cards[0]
         print("Dealer's opened card: ")
         card.display_card()
@@ -26,11 +31,11 @@ class Game:
     @staticmethod
     def play_game_round(players_dict, deck):
         for key in players_dict:
-            print("")
-            print("{}, You should to Hit: ".format(key))
             player_hand = players_dict[key]
             while True:
                 if player_hand.get_value() < 21:
+                    print("")
+                    print("{}, You should to Hit: ".format(key))
                     cards = player_hand.get_cards()
                     print("You have: ", player_hand.get_value())
                     for card in cards:
@@ -48,21 +53,20 @@ class Game:
                     print("You have: ", player_hand.get_value())
                     break
 
-    @staticmethod
-    def play_dealer(dealer_hand, deck):
+    def play_dealer(self):
         print("Dealer opens second card:")
-        cards = dealer_hand.get_cards()
+        cards = self.dealer.get_cards()
         card = cards[1]
         card.display_card()
         while True:
-            if dealer_hand.get_value() < 17:
+            if self.dealer.get_value() < 17:
                 print("Dealer is Hit")
-                dealer_hand.add_cards(deck.deal_card())
+                self.dealer.add_cards(self.cards.deal_card())
             else:
-                print("Dealer has: ", dealer_hand.get_value())
+                print("Dealer has: ", self.dealer.get_value())
                 for card in cards:
                     card.display_card()
-                print("Game is completed!")
+                print("Round is completed!")
                 break
 
     @staticmethod
@@ -78,4 +82,3 @@ class Game:
             else:
                 print("{}, You are a loser :( ".format(key))
                 chip.sub_chips(players_bet[key])
-

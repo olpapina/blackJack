@@ -1,5 +1,3 @@
-
-
 class Chip:
     def __init__(self, amount):
         self.amount = amount
@@ -29,6 +27,9 @@ class Chip:
                     break
                 else:
                     print("Your bet should be <= {} (available chips)".format(self.amount))
+            elif bet == 0:
+                print("You don't have money enough")
+                break
             else:
                 print("Please, select chips <= {}".format(max_bet))
         return bet
